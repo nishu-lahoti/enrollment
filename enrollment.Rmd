@@ -34,5 +34,11 @@ department_data <- enrollment_data %>%
 
 department_data
 
+largest_course <- enrollment_data %>%
+  filter(course_department %in% c("General Education", "Economics", "Mathematics", "Computer Science", "Government")) %>%
+  arrange(desc(total))
+
+largest_course
+
 ```
 
