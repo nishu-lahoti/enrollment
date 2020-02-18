@@ -1,0 +1,34 @@
+---
+title: "enrollment"
+author: "Nishu Lahoti"
+date: "2/18/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(reprex)
+library(tidyverse)
+library(dplyr)
+library(readxl)
+
+enrollment_data <- read_xlsx("class_enrollment_summary_by_term2.18.20.xlsx", skip = 3)
+enrollment_data
+
+
+```
+
+
+```{r}
+
+department_data <- enrollment_data %>%
+  group_by(`Course Department`) %>%
+  summarize(value = sum(UGrad)) %>%
+  arrange(desc(value)) %>%
+  head(5)
+
+department_data
+
+```
+
