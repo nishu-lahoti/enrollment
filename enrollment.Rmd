@@ -14,19 +14,26 @@ library(dplyr)
 library(readxl)
 library(janitor)
 
-enrollment_data <- 
+enrollment_data_2020 <- 
   read_xlsx("class_enrollment_summary_by_term2.18.20.xlsx", skip = 3) %>%
   clean_names() %>%
   filter(!is.na(course_name))
 
-enrollment_data
+enrollment_data_2019 <-
+  read_xlsx("class_enrollment_summary_by_term_3.22.19_0.xlsx", skip = 3) %>%
+  clean_names() %>%
+  filter(!is.na(course_name))
+
+
+head(enrollment_data_2020)
+head(enrollment_data_2019)
 
 ```
 
 
 ```{r}
 
-department_data <- enrollment_data %>%
+department_data <- enrollment_data_2020 %>%
   group_by(course_department) %>%
   summarize(value = sum(u_grad)) %>%
   arrange(desc(value)) %>%
@@ -34,9 +41,9 @@ department_data <- enrollment_data %>%
 
 department_data
 
-largest_course <- enrollment_data %>%
+largest_course <- enrollment_data_2020 %>%
   filter(course_department %in% c("General Education", "Economics", "Mathematics", "Computer Science", "Government")) %>%
-  arrange(desc(total))
+  arrange(desc(total, course_id))
 
 largest_course
 
